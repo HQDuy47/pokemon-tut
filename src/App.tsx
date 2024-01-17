@@ -24,7 +24,6 @@ const App: React.FC = () => {
       const res = await axios.get(
         "https://pokeapi.co/api/v2/pokemon?limit20&offset=20"
       );
-      console.log(res);
       setNextUrl(res.data.next);
       res.data.results.forEach(async (pokemon: Pokemons) => {
         const poke = await axios.get(
@@ -60,11 +59,13 @@ const App: React.FC = () => {
           viewDetail={viewDetail}
           setDetail={setDetail}
         />
-        <div className="btn">
-          <button onClick={nextPage}>
-            {loading ? "Loading..." : "Load more"}
-          </button>
-        </div>
+        {!viewDetail.isOpened && (
+          <div className="btn">
+            <button onClick={nextPage}>
+              {loading ? "Loading..." : "Load more"}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
